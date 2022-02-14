@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<title>TODO List</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+<!-- embedded cascading style sheet -->
+<style>
+	.title_style {
+    padding-top: 40;
+    margin-top: 100;
+	font-weight: bold;
+	font-size: 30px;
+    padding-left: 50;
+	}
+    
+    .title_div {
+    margin-top: 50px;
+    margin-left: 40px;
+    background: #f0f0f0;
+    padding-left: 10px;
+    height: 140px;
+    width: 620px;
+    }
+    
+    .text_button {
+    font-size : 20px;
+    width: 180px; 
+    height: 30px;
+    }
+    
+    .add_item_button {
+    margin-left: 10px;
+    font-size: 12px;
+    padding: 4px 11px;
+	height: 30px;
+	vertical-align: top;
+    }
+    
+    .line {
+    margin-left: 0px;
+  	margin-right: auto;
+    }
+
+	*{
+	box-sizing: border-box;
+	}
+	
+	ul {
+	margin: 0;
+	padding: 0;
+	}
+
+	ul li {
+	height: 20px;
+	width: 620px;
+	padding-left: 10px;
+	margin-left: 40px;
+	list-style-position: inside;
+	cursor: pointer;
+	font-size: 15px;
+	position: relative;
+	padding: 0px 5px 10px 10px;
+	background: #f0f0f0;
+	}
+
+	ul li.checked {
+	text-decoration: line-through;
+	}
+
+	ul li.completed::after {
+	content: "Completed";
+	font-size: 14px;
+	position: absolute;
+	color: green;
+	text-decoration: none;
+	right: 0;
+	padding-right: 10px;
+	}
+</style>
+</head>
+
+<!-- todo list application UI -->
+<body>
+<div id="myDIV" class="title_div">
+  <br>
+  <a class="title_style">Todo List</a>
+  <br>
+  <br>
+  <input type="text" size="2" class="text_button" id="add_item">
+  <button id="Add Item" class="add_item_button" onclick="addItem()">Add Item</button>
+  <br>
+  <br>
+  <hr class="line" width="600">
+</div>
+<ul id="todoUL">
+</ul>
+
+<!-- Javascript to handle todo list functionality -->
+<script>
+
+/*
+ * API to create new todo item 
+ */
+function addItem() {
+  var new_item = document.getElementById("add_item").value;
+  var list_item = document.createElement("LI");
+  var text_item = document.createTextNode(new_item);
+  list_item.appendChild(text_item);
+  /*
+   * Create new todo item only if input is valid
+   */
+  if (new_item != '') {
+    document.getElementById("todoUL").appendChild(list_item);
+  }
+  document.getElementById("add_item").value = "";
+  /*
+   * Add bootstrap erase glyphicon
+   */
+  var span_element = document.createElement("span");
+  span_element.className = "bi bi-eraser-fill";
+  list_item.appendChild(span_element);
+  /*
+   * Iterate over the list elements erase glyphicon
+   * and set delete functionality on event click trigger
+   */ 
+  var itr = 0;
+  while(itr < erase.length) {
+    erase[itr].onclick = function() {
+      this.parentElement.style.display = "none";
+    }
+	itr += 1;
+  }
+}
+
+/*
+ * Add keyup event listener for the todo list add operation
+ * keyCode 13 corresponds to enter key
+ */
+var new_item = document.getElementById("add_item");
+new_item.addEventListener("keyup",
+  function(event) {
+    if (event.which == 13) {
+       document.getElementById("Add Item").click();
+    }
+  }
+);
+
+/*
+ * Toggle from mark as complete<->incomplete, 
+ */ 
+var list_item = document.querySelector('ul');
+list_item.addEventListener('click', function(event) {
+  if (event.target.tagName == 'LI') {
+    event.target.classList.toggle('checked');
+    event.target.classList.toggle('completed');
+  }
+}, false);
+
+/*
+ * Click on the erase button to remove the todo list item
+ */ 
+var erase = document.getElementsByClassName("bi bi-eraser-fill");
+for (itr = 0; itr < erase.length; itr++) {
+  erase[itr].onclick = function() {
+    var item = this.parentElement;
+	var ul = document.getElementById("todoUL");
+	ul.removeChild(item);
+  }
+}
+
+</script>
+</body>
+</html>
+
+
